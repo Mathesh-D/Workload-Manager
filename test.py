@@ -137,8 +137,9 @@ def get_student_to_faculty_ratio():
     # Query to get the total number of faculty
     c.execute("SELECT COUNT(*) AS total_faculty FROM Users WHERE role_in_dept = 'faculty' or role_in_dept = 'hod' and status = 'Active'")
     total_faculty = c.fetchone()[0]
-
-    if total_faculty == 0:
+    if total_students == None:
+        return "N/A" 
+    if total_faculty == None:
         return "N/A"  # To handle division by zero error
 
     # Calculate the student-to-faculty ratio

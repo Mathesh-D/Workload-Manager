@@ -1051,8 +1051,8 @@ def remove_all_duty():
 
 app.config["MAIL_SERVER"]='smtp.gmail.com'
 app.config["MAIL_PORT"]=465
-app.config["MAIL_USERNAME"]='sendermail'  # sender mail
-app.config['MAIL_PASSWORD']=''                   #you have to give your password of gmail account
+app.config["MAIL_USERNAME"]='mathesh2210645@ssn.edu.in'  # sender mail
+app.config['MAIL_PASSWORD']='Ssnpassword2004'                   #you have to give your password of gmail account
 app.config['MAIL_USE_TLS']=False
 app.config['MAIL_USE_SSL']=True
 mail=Mail(app)
@@ -1061,7 +1061,7 @@ otp=randint(000000,999999)
 @app.route('/registration',methods=['GET', 'POST'])
 def registration():
     temp=current_user[0]
-    msg=Message(subject='OTP',sender='sendermail',recipients=[temp])
+    msg=Message(subject='OTP',sender='mathesh2210645@ssn.edu.in',recipients=[temp])
     msg.body=str(otp)
     mail.send(msg)
     return render_template('verify.html')
@@ -1071,16 +1071,21 @@ email_id=None
 """@app.route('/verify',methods=["POST"])
 def verify():
     temp=current_user[0]
-    msg=Message(subject='OTP',sender='sendermail',recipients=[temp])
+    msg=Message(subject='OTP',sender='mathesh2210645@ssn.edu.in',recipients=[temp])
     msg.body=str(otp)
     mail.send(msg)
     return render_template('verify.html')"""
-@app.route('/validate',methods=['POST'])
+@app.route('/validate', methods=['POST'])
 def validate():
-    user_otp=request.form['otp']
-    if otp==int(user_otp):
-        return render_template("change_password.html")
-    #return "<h3>Please Try Again</h3>"
+    user_otp = request.form['otp']
+    try:
+        if otp == int(user_otp):
+            return render_template("change_password.html")
+    except ValueError:
+        pass
+    flash("Invalid OTP")
+    return render_template("verify2.html")
+
 @app.route('/register', methods=["GET", "POST"])
 def register():
     if request.method == "POST":
@@ -1123,16 +1128,20 @@ def register():
 @app.route('/verify',methods=["GET"])
 def verify():
     temp=current_user[0]
-    msg=Message(subject='OTP',sender='sendermail',recipients=[temp])
+    msg=Message(subject='OTP',sender='mathesh2210645@ssn.edu.in',recipients=[temp])
     msg.body=str(otp)
     mail.send(msg)
     return render_template("verify2.html")
 
-@app.route('/validate2',methods=['POST'])
+@app.route('/validate2', methods=['POST'])
 def validate2():
-    user_otp=request.form['otp']
-    if otp==int(user_otp):
+    user_otp = request.form['otp']
+    # Assuming `otp` is the correct OTP for validation
+    if otp == int(user_otp):
         return render_template("user_registration.html")
+    flash("Invalid OTP")
+    return render_template("verify.html")
+
     
 
 @app.route('/password', methods=["POST", "GET"])

@@ -14,6 +14,8 @@
             justify-content: center;
             align-items: center;
             min-height: 100vh;
+            max-width: 1280px;
+            margin: auto;
         }
         .header {
             background-color: #06317B;
@@ -21,6 +23,7 @@
             padding: 20px;
             text-align: center;
             position: relative;
+            width: 25%;
         }
         .header img {
             position: absolute;
@@ -43,7 +46,7 @@
             width: 100%;
         }
         h1 {
-            color: #0E4AA1;
+            color: #ffffff;
             font-size: 24px;
             margin-bottom: 20px;
         }
@@ -74,18 +77,30 @@
         input[type="submit"]:hover {
             background-color: #0C3B86;
         }
+        .alert {
+            color: #a94442;
+            background-color: #f2dede;
+            border-color: #ebccd1;
+            padding: 15px;
+            margin-bottom: 20px;
+            border: 1px solid transparent;
+            border-radius: 4px;
+        }
     </style>
 </head>
 <body>
     <div class="header">
-        <img src="ssn logo 2.png" alt="Logo">
+        <!-- <img src="ssn logo 2.png" alt="Logo"> -->
         <h1>OTP VERIFY</h1>
-        <a href="/homepage" class="home-button">
-            <img src="home.png" alt="Home">
-            Home
-        </a>
     </div>
     <div class="container">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="alert alert-{{ category }}">{{ message }}</div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
         <form action="/validate2" method="post">
             <h1>One time password has been sent to the mail id.<br>Please check...</h1>
             <p>by <b>Mathesh</b></p>
@@ -95,4 +110,3 @@
     </div>
 </body>
 </html>
- 
